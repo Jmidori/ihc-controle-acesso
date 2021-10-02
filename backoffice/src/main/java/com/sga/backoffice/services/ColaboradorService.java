@@ -8,8 +8,6 @@ import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.repositories.PerfilAcessoRepository;
 
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,20 +21,16 @@ public class ColaboradorService {
     public List<String> createColaborador(ColaboradorRequest request,
                                           ColaboradorRepository colaboradorRepository,
                                           CrachaRepository crachaRepository,
-                                          PerfilAcessoRepository perfilRepository) {
+                                          PerfilAcessoRepository perfilRepository,
+                                          CrachaService crachaService) {
 
         Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(request.getCpf());
-        Optional<Cracha> cracha = crachaRepository.findById(request.getCrachaId());
         Optional<PerfilAcesso> perfilAcesso = perfilRepository.findById(request.getPerfilAcessoId());
 
         List<String> response = new ArrayList<>();
 
         if(colaborador.isPresent()){
             response.add(CPF_ALREADY_REGISTERED);
-        }
-
-        if(cracha.isEmpty()){
-            response.add(CRACHA_NOT_FOUND);
         }
 
         if(perfilAcesso.isEmpty()){
@@ -47,21 +41,21 @@ public class ColaboradorService {
             return response;
         }
 
-        Cracha crachaAtivo = activeCracha(cracha.get(), crachaRepository);
+        Cracha cracha = crachaService.enable(request.getCrachaId(), crachaRepository);
+
+        if(cracha.equals(null)){
+            response.add(CRACHA_NOT_FOUND);
+            return response;
+        }
 
         colaboradorRepository.save(new Colaborador(request.getCpf(),
                 request.getNome(),
                 request.getEmail(),
-                crachaAtivo,
+                cracha,
                 perfilAcesso.get()));
 
         return response;
 
-    }
-
-    public Cracha activeCracha(Cracha cracha, CrachaRepository repository) {
-        cracha.setAtivo(true);
-        return repository.save(cracha);
     }
 
     public List<String> update(Colaborador request, ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilRepository) {

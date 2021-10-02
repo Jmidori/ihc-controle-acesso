@@ -6,6 +6,7 @@ import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.repositories.PerfilAcessoRepository;
 import com.sga.backoffice.services.ColaboradorService;
+import com.sga.backoffice.services.CrachaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,14 @@ public class ColaboradorController {
     private final CrachaRepository crachaRepository;
     private final PerfilAcessoRepository perfilAcessoRepository;
     private final ColaboradorService service;
+    private final CrachaService crachaService;
 
-    public ColaboradorController(ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilAcessoRepository, ColaboradorService service) {
+    public ColaboradorController(ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilAcessoRepository, ColaboradorService service, CrachaService crachaService) {
         this.repository = repository;
         this.crachaRepository = crachaRepository;
         this.perfilAcessoRepository = perfilAcessoRepository;
         this.service = service;
+        this.crachaService = crachaService;
     }
 
     @GetMapping()
@@ -57,7 +60,7 @@ public class ColaboradorController {
 
     @PostMapping("/novo")
     public ResponseEntity<List<String>> newColaborador(@RequestBody ColaboradorRequest request){
-        List<String> response = service.createColaborador(request, repository, crachaRepository, perfilAcessoRepository);
+        List<String> response = service.createColaborador(request, repository, crachaRepository, perfilAcessoRepository, crachaService);
 
         if(response.isEmpty()){
             return new ResponseEntity<>(response, HttpStatus.CREATED);
