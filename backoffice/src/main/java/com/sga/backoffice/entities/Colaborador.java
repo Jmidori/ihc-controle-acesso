@@ -33,6 +33,15 @@ public class Colaborador {
     public Colaborador() {
     }
 
+    public Colaborador(Long id, String cpf, String nome, String email, Cracha cracha, PerfilAcesso perfilAcesso) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.cracha = cracha;
+        this.perfilAcesso = perfilAcesso;
+    }
+
     public Colaborador(String cpf, String nome, String email, Cracha cracha, PerfilAcesso perfilAcesso) {
         this.cpf = cpf;
         this.nome = nome;

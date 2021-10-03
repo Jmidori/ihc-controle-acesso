@@ -18,11 +18,11 @@ public class ColaboradorService {
     private final String PERFIL_NOT_FOUND = "Perfil de Acesso nao encontrado.";
     private final String ID_NOT_FOUND = "Colaborador nao encontrado";
 
-    public List<String> createColaborador(ColaboradorRequest request,
-                                          ColaboradorRepository colaboradorRepository,
-                                          CrachaRepository crachaRepository,
-                                          PerfilAcessoRepository perfilRepository,
-                                          CrachaService crachaService) {
+    public List<String> create(ColaboradorRequest request,
+                               ColaboradorRepository colaboradorRepository,
+                               CrachaRepository crachaRepository,
+                               PerfilAcessoRepository perfilRepository,
+                               CrachaService crachaService) {
 
         Optional<Colaborador> colaborador = colaboradorRepository.findByCpf(request.getCpf());
         Optional<PerfilAcesso> perfilAcesso = perfilRepository.findById(request.getPerfilAcessoId());
@@ -81,13 +81,12 @@ public class ColaboradorService {
             return response;
         }
 
-        colaborador.get().setCpf(request.getCpf());
-        colaborador.get().setNome(request.getNome());
-        colaborador.get().setEmail(request.getEmail());
-        colaborador.get().setCracha(cracha.get());
-        colaborador.get().setPerfilAcesso(perfilAcesso.get());
-
-        repository.save(colaborador.get());
+        repository.save(new Colaborador(colaborador.get().getId(),
+                                        request.getCpf(),
+                                        request.getNome(),
+                                        request.getEmail(),
+                                        cracha.get(),
+                                        perfilAcesso.get()));
         return response;
     }
 

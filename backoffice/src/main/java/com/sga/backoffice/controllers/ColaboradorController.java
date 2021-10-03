@@ -60,7 +60,7 @@ public class ColaboradorController {
 
     @PostMapping("/novo")
     public ResponseEntity<List<String>> newColaborador(@RequestBody ColaboradorRequest request){
-        List<String> response = service.createColaborador(request, repository, crachaRepository, perfilAcessoRepository, crachaService);
+        List<String> response = service.create(request, repository, crachaRepository, perfilAcessoRepository, crachaService);
 
         if(response.isEmpty()){
             return new ResponseEntity<>(response, HttpStatus.CREATED);

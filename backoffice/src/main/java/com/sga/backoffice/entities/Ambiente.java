@@ -30,11 +30,17 @@ public class Ambiente {
     public Ambiente() {
     }
 
-    public Ambiente(String nome, String descricao, int nivelAcesso, Set<Acesso> acessos) {
+    public Ambiente(Long id, String nome, String descricao, int nivelAcesso) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.nivelAcesso = nivelAcesso;
-        this.acessos = acessos;
+    }
+
+    public Ambiente(String nome, String descricao, int nivelAcesso) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.nivelAcesso = nivelAcesso;
     }
 
     public Long getId() {
@@ -71,5 +77,13 @@ public class Ambiente {
 
     public void setAcessos(Set<Acesso> acessos) {
         this.acessos = acessos;
+    }
+
+    public Set<GrupoAcesso> getGrupoAcessos() {
+        return grupoAcessos;
+    }
+
+    public void setGrupoAcessos(Set<GrupoAcesso> grupoAcessos) {
+        this.grupoAcessos = grupoAcessos;
     }
 }

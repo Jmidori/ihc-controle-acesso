@@ -28,13 +28,13 @@ public class CrachaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cracha> getById(@PathVariable Long id){
-        Optional<Cracha> Cracha = repository.findById(id);
+        Optional<Cracha> cracha = repository.findById(id);
 
-        if(!Cracha.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(cracha.isPresent()){
+            return new ResponseEntity<Cracha>(cracha.get(), HttpStatus.OK);
         }
 
-        return new ResponseEntity<Cracha>(Cracha.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/novo")
@@ -56,10 +56,10 @@ public class CrachaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
-        Optional<Cracha> Cracha = repository.findById(id);
+        Optional<Cracha> cracha = repository.findById(id);
 
-        if(Cracha.isPresent()){
-            repository.delete(Cracha.get());
+        if(cracha.isPresent()){
+            repository.delete(cracha.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
