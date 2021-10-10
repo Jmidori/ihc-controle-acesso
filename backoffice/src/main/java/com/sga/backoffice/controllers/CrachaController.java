@@ -3,6 +3,7 @@ package com.sga.backoffice.controllers;
 import com.sga.backoffice.entities.Cracha;
 import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.services.CrachaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/cracha")
 public class CrachaController {
-    private final CrachaRepository repository;
-    private final CrachaService service;
+    @Autowired
+    private CrachaRepository repository;
+    @Autowired
+    private CrachaService service;
 
     public CrachaController(CrachaRepository crachaRepository, CrachaService service) {
         this.repository = crachaRepository;

@@ -7,11 +7,13 @@ import com.sga.backoffice.entities.PerfilAcesso;
 import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.repositories.PerfilAcessoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ColaboradorService {
     private final String CPF_ALREADY_REGISTERED = "Colaborador ja cadastrado.";
     private final String CRACHA_NOT_FOUND = "Cracha nao encontrado.";

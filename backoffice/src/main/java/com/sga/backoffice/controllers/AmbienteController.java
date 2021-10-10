@@ -3,6 +3,7 @@ package com.sga.backoffice.controllers;
 import com.sga.backoffice.entities.Ambiente;
 import com.sga.backoffice.repositories.AmbienteRepository;
 import com.sga.backoffice.services.AmbienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/ambiente")
 public class AmbienteController {
-    private final AmbienteRepository repository;
-    private final AmbienteService service;
-
-    public AmbienteController(AmbienteRepository repository, AmbienteService service) {
-        this.repository = repository;
-        this.service = service;
-    }
+    @Autowired
+    private AmbienteRepository repository;
+    @Autowired
+    private AmbienteService service;
 
     @GetMapping()
     public ResponseEntity<List<Ambiente>> getAll(){

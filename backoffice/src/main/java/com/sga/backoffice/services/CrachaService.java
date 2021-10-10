@@ -2,9 +2,11 @@ package com.sga.backoffice.services;
 
 import com.sga.backoffice.entities.Cracha;
 import com.sga.backoffice.repositories.CrachaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CrachaService {
 
     public Cracha create(CrachaRepository repository) {

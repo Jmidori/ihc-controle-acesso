@@ -7,6 +7,7 @@ import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.repositories.PerfilAcessoRepository;
 import com.sga.backoffice.services.ColaboradorService;
 import com.sga.backoffice.services.CrachaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +18,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/colaborador")
 public class ColaboradorController {
-    private final ColaboradorRepository repository;
-    private final CrachaRepository crachaRepository;
-    private final PerfilAcessoRepository perfilAcessoRepository;
-    private final ColaboradorService service;
-    private final CrachaService crachaService;
-
-    public ColaboradorController(ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilAcessoRepository, ColaboradorService service, CrachaService crachaService) {
-        this.repository = repository;
-        this.crachaRepository = crachaRepository;
-        this.perfilAcessoRepository = perfilAcessoRepository;
-        this.service = service;
-        this.crachaService = crachaService;
-    }
+    @Autowired
+    private ColaboradorRepository repository;
+    @Autowired
+    private CrachaRepository crachaRepository;
+    @Autowired
+    private PerfilAcessoRepository perfilAcessoRepository;
+    @Autowired
+    private ColaboradorService service;
+    @Autowired
+    private CrachaService crachaService;
 
     @GetMapping()
     public ResponseEntity<List<Colaborador>> getAll(){
