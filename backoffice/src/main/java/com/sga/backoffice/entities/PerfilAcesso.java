@@ -26,10 +26,9 @@ public class PerfilAcesso {
     public PerfilAcesso() {
     }
 
-    public PerfilAcesso(String nome, String descricao, Colaborador colaborador) {
+    public PerfilAcesso(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
-        this.colaborador = colaborador;
     }
 
     public Long getId() {

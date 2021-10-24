@@ -11,9 +11,6 @@ import java.util.Optional;
 public class AmbienteService {
     @Autowired
     private AmbienteRepository repository;
-    private final String AMBIENTE_ALREADY_REGISTERED = "Já existe um ambiente com o nome ";
-    private final String ID_NOT_FOUND = "Colaborador nao encontrado";
-    private final String RESPONSE_OK = "Operacao realizada com sucesso";
 
     public boolean create(Ambiente request) {
         Optional<Ambiente> ambiente = repository.findByNome(request.getNome());
