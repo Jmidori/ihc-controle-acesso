@@ -53,6 +53,7 @@ public class ColaboradorService {
         colaboradorRepository.save(new Colaborador(request.getCpf(),
                 request.getNome(),
                 request.getEmail(),
+                true,
                 cracha,
                 perfilAcesso.get()));
 
@@ -87,6 +88,7 @@ public class ColaboradorService {
                                         request.getCpf(),
                                         request.getNome(),
                                         request.getEmail(),
+                                        request.isAtivo(),
                                         cracha.get(),
                                         perfilAcesso.get()));
         return response;

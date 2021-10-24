@@ -18,28 +18,27 @@ public class Ambiente {
     @Column(name = "amb_descricao")
     private String descricao;
 
+    @Column(name = "amb_sentido_fluxo")
+    private String sentidoFluxo;
+
     @Column(name = "amb_nivel_acesso")
     private int nivelAcesso;
-
-    @OneToMany(mappedBy="ambiente")
-    private Set<Acesso> acessos;
-
-    @OneToMany(mappedBy="ambiente")
-    private Set<GrupoAcesso> grupoAcessos;
 
     public Ambiente() {
     }
 
-    public Ambiente(Long id, String nome, String descricao, int nivelAcesso) {
+    public Ambiente(Long id, String nome, String descricao, String sentidoFluxo, int nivelAcesso) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.sentidoFluxo = sentidoFluxo;
         this.nivelAcesso = nivelAcesso;
     }
 
-    public Ambiente(String nome, String descricao, int nivelAcesso) {
+    public Ambiente(String nome, String descricao, String sentidoFluxo, int nivelAcesso) {
         this.nome = nome;
         this.descricao = descricao;
+        this.sentidoFluxo = sentidoFluxo;
         this.nivelAcesso = nivelAcesso;
     }
 
@@ -63,6 +62,14 @@ public class Ambiente {
         this.descricao = descricao;
     }
 
+    public String getSentidoFluxo() {
+        return sentidoFluxo;
+    }
+
+    public void setSentidoFluxo(String sentidoFluxo) {
+        this.sentidoFluxo = sentidoFluxo;
+    }
+
     public int getNivelAcesso() {
         return nivelAcesso;
     }
@@ -71,19 +78,4 @@ public class Ambiente {
         this.nivelAcesso = nivelAcesso;
     }
 
-    public Set<Acesso> getAcessos() {
-        return acessos;
-    }
-
-    public void setAcessos(Set<Acesso> acessos) {
-        this.acessos = acessos;
-    }
-
-    public Set<GrupoAcesso> getGrupoAcessos() {
-        return grupoAcessos;
-    }
-
-    public void setGrupoAcessos(Set<GrupoAcesso> grupoAcessos) {
-        this.grupoAcessos = grupoAcessos;
-    }
 }

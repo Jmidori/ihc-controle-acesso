@@ -13,28 +13,29 @@ public class AmbienteService {
     private AmbienteRepository repository;
     private final String AMBIENTE_ALREADY_REGISTERED = "Já existe um ambiente com o nome ";
     private final String ID_NOT_FOUND = "Colaborador nao encontrado";
+    private final String RESPONSE_OK = "Operacao realizada com sucesso";
 
-    public String create(Ambiente request) {
+    public boolean create(Ambiente request) {
         Optional<Ambiente> ambiente = repository.findByNome(request.getNome());
 
         if(ambiente.isPresent()){
-            return AMBIENTE_ALREADY_REGISTERED.concat(request.getNome());
+            return false;
         }
 
-        repository.save(new Ambiente(request.getNome(), request.getDescricao(), request.getNivelAcesso()));
+        repository.save(new Ambiente(request.getNome(), request.getDescricao(), request.getSentidoFluxo(),request.getNivelAcesso()));
 
-        return null;
+        return true;
     }
 
-    public String update(Ambiente request) {
+    public boolean update(Ambiente request) {
         Optional<Ambiente> ambiente = repository.findById(request.getId());
 
         if(!ambiente.isPresent()){
-            return ID_NOT_FOUND;
+            return false;
         }
 
-        repository.save(new Ambiente(ambiente.get().getId(), request.getNome(), request.getDescricao(), request.getNivelAcesso()));
+        repository.save(new Ambiente(ambiente.get().getId(), request.getNome(), request.getDescricao(), request.getSentidoFluxo(),request.getNivelAcesso()));
 
-        return null;
+        return true;
     }
 }

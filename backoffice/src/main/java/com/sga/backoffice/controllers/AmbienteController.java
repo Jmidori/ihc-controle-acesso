@@ -47,25 +47,25 @@ public class AmbienteController {
     }
 
     @PostMapping("/novo")
-    public ResponseEntity<String> newAmbiente(@RequestBody Ambiente request){
-        String response = service.create(request);
+    public ResponseEntity<String> newAmbiente(@RequestBody Ambiente ambiente){
+        boolean sucess = service.create(ambiente);
 
-        if(response.isEmpty()){
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        if(sucess){
+            return new ResponseEntity<>("Ambiente cadastrado com sucesso", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>("Já existe um ambiente com o nome " + ambiente.getNome(), HttpStatus.CONFLICT);
     }
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody Ambiente ambiente){
-        String response = service.update(ambiente);
+        boolean sucess = service.update(ambiente);
 
-        if(response.isEmpty()){
-           return new ResponseEntity<>(response, HttpStatus.OK);
+        if(sucess){
+           return new ResponseEntity<>("Ambiente alterado com sucesso", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>("Ambiente nao encontrado. Confira o ID e tente novamente.", HttpStatus.CONFLICT);
     }
 
     @DeleteMapping("/{id}")

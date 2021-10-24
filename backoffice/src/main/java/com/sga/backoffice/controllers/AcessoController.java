@@ -46,7 +46,7 @@ public class AcessoController {
         System.out.println("--->" + finalDt);
 
         if(initialDt.after(finalDt)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Intervalo incorreto. Ajuste a data de inicio e fim da pesquisa.", HttpStatus.BAD_REQUEST);
         }
 
         List<Acesso> acessosHistory = new ArrayList<>();
@@ -81,7 +81,7 @@ public class AcessoController {
                 Optional<Ambiente> ambiente = ambienteRepo.findById(ambienteId.get());
 
                 if (!ambiente.isPresent()) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("O ambiente nao pode ser encontrado.", HttpStatus.BAD_REQUEST);
                 }
 
                 acessosHistory = service.getAccessHistoryByRangeDateAndAmbiente(initialDt, finalDt, ambienteId.get());

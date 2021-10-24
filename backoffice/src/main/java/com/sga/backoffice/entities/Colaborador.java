@@ -19,6 +19,9 @@ public class Colaborador {
     @Column(name = "col_email")
     private String email;
 
+    @Column(name = "col_ativo")
+    private boolean ativo;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cra_id", referencedColumnName = "cra_id")
     private Cracha cracha;
@@ -33,19 +36,21 @@ public class Colaborador {
     public Colaborador() {
     }
 
-    public Colaborador(Long id, String cpf, String nome, String email, Cracha cracha, PerfilAcesso perfilAcesso) {
+    public Colaborador(Long id, String cpf, String nome, String email, boolean ativo, Cracha cracha, PerfilAcesso perfilAcesso) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
+        this.ativo = ativo;
         this.cracha = cracha;
         this.perfilAcesso = perfilAcesso;
     }
 
-    public Colaborador(String cpf, String nome, String email, Cracha cracha, PerfilAcesso perfilAcesso) {
+    public Colaborador(String cpf, String nome, String email, boolean ativo, Cracha cracha, PerfilAcesso perfilAcesso) {
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
+        this.ativo = ativo;
         this.cracha = cracha;
         this.perfilAcesso = perfilAcesso;
     }
@@ -76,6 +81,14 @@ public class Colaborador {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Cracha getCracha() {
