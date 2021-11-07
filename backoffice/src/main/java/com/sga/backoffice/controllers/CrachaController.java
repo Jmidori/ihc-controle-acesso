@@ -47,25 +47,25 @@ public class CrachaController {
     }
 
     @PutMapping("/desativar/{id}")
-    public ResponseEntity<Cracha> disable(@PathVariable Long id){
-        Cracha response = service.disable(id, repository);
+    public ResponseEntity<String> disable(@PathVariable Long id){
+        boolean success = service.disable(id, repository);
 
-        if(!response.equals(null)){
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        if(!success){
+            return new ResponseEntity<>("Cracha ID nao encontrado.", HttpStatus.NOT_FOUND);
+
         }
-
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Cracha desativado com sucesso.", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<String> delete(@PathVariable Long id){
         Optional<Cracha> cracha = repository.findById(id);
 
         if(cracha.isPresent()){
             repository.delete(cracha.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Cracha excluido com sucesso.", HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Cracha ID nao encontrado", HttpStatus.NOT_FOUND);
     }
 }

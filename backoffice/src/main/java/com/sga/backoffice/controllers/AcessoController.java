@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +39,6 @@ public class AcessoController {
                                                    @RequestParam(value = "dt-final") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date finalDt,
                                                    @RequestParam(value = "colaborador", required = false) Optional<String> cpf,
                                                    @RequestParam(value = "ambiente-id", required = false) Optional<Long> ambienteId) throws ParseException {
-
-        System.out.println("--->" + initialDt);
-        System.out.println("--->" + finalDt);
 
         if(initialDt.after(finalDt)){
             return new ResponseEntity<>("Intervalo incorreto. Ajuste a data de inicio e fim da pesquisa.", HttpStatus.BAD_REQUEST);

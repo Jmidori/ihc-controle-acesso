@@ -14,15 +14,16 @@ public class CrachaService {
         return repository.save(cracha);
     }
 
-    public Cracha disable(Long id, CrachaRepository repository) {
+    public boolean disable(Long id, CrachaRepository repository) {
         Optional<Cracha> cracha = repository.findById(id);
 
         if(!cracha.isPresent()){
-            return null;
+            return false;
         }
 
         cracha.get().setAtivo(false);
-        return repository.save(cracha.get());
+        repository.save(cracha.get());
+        return true;
     }
 
     public Cracha enable(Long id, CrachaRepository repository) {

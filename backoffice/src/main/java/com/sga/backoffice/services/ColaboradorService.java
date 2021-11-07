@@ -1,6 +1,7 @@
 package com.sga.backoffice.services;
 
 import com.sga.backoffice.controllers.request.ColaboradorRequest;
+import com.sga.backoffice.controllers.response.ColaboradorResponse;
 import com.sga.backoffice.entities.Colaborador;
 import com.sga.backoffice.entities.Cracha;
 import com.sga.backoffice.entities.PerfilAcesso;
@@ -19,6 +20,22 @@ public class ColaboradorService {
     private final String CRACHA_NOT_FOUND = "Cracha nao encontrado.";
     private final String PERFIL_NOT_FOUND = "Perfil de Acesso nao encontrado.";
     private final String ID_NOT_FOUND = "Colaborador nao encontrado";
+
+    public List<ColaboradorResponse> getAll(ColaboradorRepository repository) {
+        List<Colaborador> colaboradores = repository.findAll();
+        return adapter(colaboradores);
+    }
+
+    private List<ColaboradorResponse> adapter(List<Colaborador> colaboradores) {
+        List<ColaboradorResponse> responseList = new ArrayList<>();
+        colaboradores.forEach(c -> responseList.add(
+                new ColaboradorResponse(c.getCpf(),
+                        c.getNome(),
+                        c.getEmail(),
+                        c.getCracha().getId(),
+                        c.getPerfilAcesso().getId())));
+        return responseList;
+    }
 
     public List<String> create(ColaboradorRequest request,
                                ColaboradorRepository colaboradorRepository,
@@ -39,7 +56,7 @@ public class ColaboradorService {
             response.add(PERFIL_NOT_FOUND);
         }
 
-        if(!response.isEmpty()){
+        if(response.size() > 0 || response.isEmpty()){
             return response;
         }
 
@@ -93,5 +110,4 @@ public class ColaboradorService {
                                         perfilAcesso.get()));
         return response;
     }
-
 }

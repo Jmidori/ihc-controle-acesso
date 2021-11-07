@@ -1,6 +1,7 @@
 package com.sga.backoffice.controllers;
 
 import com.sga.backoffice.controllers.request.ColaboradorRequest;
+import com.sga.backoffice.controllers.response.ColaboradorResponse;
 import com.sga.backoffice.entities.Colaborador;
 import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.CrachaRepository;
@@ -30,8 +31,9 @@ public class ColaboradorController {
     private CrachaService crachaService;
 
     @GetMapping()
-    public ResponseEntity<List<Colaborador>> getAll(){
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ColaboradorResponse>> getAll(){
+        List<ColaboradorResponse> response = service.getAll(repository);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -60,7 +62,7 @@ public class ColaboradorController {
     public ResponseEntity<List<String>> newColaborador(@RequestBody ColaboradorRequest request){
         List<String> response = service.create(request, repository, crachaRepository, perfilAcessoRepository, crachaService);
 
-        if(response.isEmpty()){
+        if(response.size() == 0){
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
 
