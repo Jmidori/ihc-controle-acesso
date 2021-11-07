@@ -37,25 +37,26 @@ public class ColaboradorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Colaborador> getById(@PathVariable Long id){
-        Optional<Colaborador> colaborador = repository.findById(id);
+    public ResponseEntity<ColaboradorResponse> getById(@PathVariable Long id){
+        ColaboradorResponse response = service.getById(repository, id);
 
-        if(!colaborador.isPresent()){
+        if(response == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Colaborador>(colaborador.get(), HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<Colaborador> getByCpf(@PathVariable String cpf){
+    public ResponseEntity<ColaboradorResponse> getByCpf(@PathVariable String cpf){
+        ColaboradorResponse response = service.getByCpf(repository, cpf);
         Optional<Colaborador> colaborador = repository.findByCpf(cpf);
 
-        if(colaborador.isPresent()){
-            return new ResponseEntity<Colaborador>(colaborador.get(), HttpStatus.OK);
+        if(response == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/novo")
@@ -63,10 +64,11 @@ public class ColaboradorController {
         List<String> response = service.create(request, repository, crachaRepository, perfilAcessoRepository, crachaService);
 
         if(response.size() == 0){
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            response.add("Colaborador salvo com sucesso.");
+            return new ResponseEntity(response, HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity(response, HttpStatus.CONFLICT);
     }
 
     @PutMapping

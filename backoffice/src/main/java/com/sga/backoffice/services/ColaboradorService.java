@@ -8,6 +8,8 @@ import com.sga.backoffice.entities.PerfilAcesso;
 import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.CrachaRepository;
 import com.sga.backoffice.repositories.PerfilAcessoRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,18 +25,40 @@ public class ColaboradorService {
 
     public List<ColaboradorResponse> getAll(ColaboradorRepository repository) {
         List<Colaborador> colaboradores = repository.findAll();
-        return adapter(colaboradores);
+
+        List<ColaboradorResponse> responseList = new ArrayList<>();
+        colaboradores.forEach(c -> responseList.add(adapter(c)));
+        return responseList;
     }
 
-    private List<ColaboradorResponse> adapter(List<Colaborador> colaboradores) {
-        List<ColaboradorResponse> responseList = new ArrayList<>();
-        colaboradores.forEach(c -> responseList.add(
-                new ColaboradorResponse(c.getCpf(),
-                        c.getNome(),
-                        c.getEmail(),
-                        c.getCracha().getId(),
-                        c.getPerfilAcesso().getId())));
-        return responseList;
+    public ColaboradorResponse getById(ColaboradorRepository repository, Long id) {
+        Optional<Colaborador> colaborador = repository.findById(id);
+
+        if(colaborador.isPresent()){
+           return adapter(colaborador.get());
+        }
+
+        return null;
+    }
+
+    public ColaboradorResponse getByCpf(ColaboradorRepository repository, String cpf) {
+        Optional<Colaborador> colaborador = repository.findByCpf(cpf);
+
+        if(colaborador.isPresent()){
+            return adapter(colaborador.get());
+        }
+
+        return null;
+    }
+
+    private ColaboradorResponse adapter(Colaborador entity) {
+        return new ColaboradorResponse(
+                entity.getId(),
+                entity.getNome(),
+                entity.getCpf(),
+                entity.getEmail(),
+                entity.getCracha().getId(),
+                entity.getPerfilAcesso().getId());
     }
 
     public List<String> create(ColaboradorRequest request,
@@ -56,13 +80,13 @@ public class ColaboradorService {
             response.add(PERFIL_NOT_FOUND);
         }
 
-        if(response.size() > 0 || response.isEmpty()){
+        if(!response.isEmpty()){
             return response;
         }
 
         Cracha cracha = crachaService.enable(request.getCrachaId(), crachaRepository);
 
-        if(cracha.equals(null)){
+        if(cracha == null){
             response.add(CRACHA_NOT_FOUND);
             return response;
         }

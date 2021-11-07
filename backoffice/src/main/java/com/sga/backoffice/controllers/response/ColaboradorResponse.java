@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ColaboradorResponse {
     @JsonProperty
+    private Long id;
+    @JsonProperty
     private String cpf;
     @JsonProperty
     private String nome;
@@ -17,13 +19,18 @@ public class ColaboradorResponse {
     public ColaboradorResponse() {
     }
 
-    public ColaboradorResponse(String cpf, String nome, String email, Long crachaId, Long perfilAcessoId) {
+    public ColaboradorResponse(Long id, String cpf, String nome, String email, Long crachaId, Long perfilAcessoId) {
+        this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
         this.crachaId = crachaId;
         this.perfilAcessoId = perfilAcessoId;
     }
+
+   public Long getId() {
+        return id;
+   }
 
     public String getCpf() {
         return cpf;
