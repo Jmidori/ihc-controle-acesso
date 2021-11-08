@@ -72,7 +72,7 @@ public class ColaboradorController {
     }
 
     @PutMapping
-    public ResponseEntity<List<String>> update(@RequestBody Colaborador colaborador){
+    public ResponseEntity<List<String>> update(@RequestBody ColaboradorResponse colaborador){
         List<String> response = service.update(colaborador, repository, crachaRepository, perfilAcessoRepository);
 
         if(response.isEmpty()){

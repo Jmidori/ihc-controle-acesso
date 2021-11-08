@@ -1,6 +1,7 @@
 package com.sga.backoffice.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,9 @@ public class PerfilAcesso {
     @Column(name="pac_descricao")
     private String descricao;
 
-    @OneToOne(mappedBy = "perfilAcesso")
-    private Colaborador colaborador;
+    @OneToMany
+    @JoinColumn(name = "col_id")
+    private List<Colaborador> colaboradores;
 
     @OneToMany(mappedBy="perfilAcesso")
     private Set<GrupoAcesso> grupoAcessos;
@@ -51,11 +53,11 @@ public class PerfilAcesso {
         this.descricao = descricao;
     }
 
-    public Colaborador getColaborador() {
-        return colaborador;
+    public List<Colaborador> getColaboradores() {
+        return colaboradores;
     }
 
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
+    public void setColaboradores(List<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
     }
 }

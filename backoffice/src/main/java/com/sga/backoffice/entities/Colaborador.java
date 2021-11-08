@@ -26,7 +26,7 @@ public class Colaborador {
     @JoinColumn(name = "cra_id", referencedColumnName = "cra_id")
     private Cracha cracha;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pac_id", referencedColumnName = "pac_id")
     private PerfilAcesso perfilAcesso;
 

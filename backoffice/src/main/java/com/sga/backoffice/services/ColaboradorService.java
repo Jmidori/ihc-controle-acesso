@@ -57,6 +57,7 @@ public class ColaboradorService {
                 entity.getNome(),
                 entity.getCpf(),
                 entity.getEmail(),
+                entity.isAtivo(),
                 entity.getCracha().getId(),
                 entity.getPerfilAcesso().getId());
     }
@@ -102,10 +103,10 @@ public class ColaboradorService {
 
     }
 
-    public List<String> update(Colaborador request, ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilRepository) {
+    public List<String> update(ColaboradorResponse request, ColaboradorRepository repository, CrachaRepository crachaRepository, PerfilAcessoRepository perfilRepository) {
         Optional<Colaborador> colaborador = repository.findById(request.getId());
-        Optional<Cracha> cracha = crachaRepository.findById(request.getCracha().getId());
-        Optional<PerfilAcesso> perfilAcesso = perfilRepository.findById(request.getPerfilAcesso().getId());
+        Optional<Cracha> cracha = crachaRepository.findById(request.getCrachaId());
+        Optional<PerfilAcesso> perfilAcesso = perfilRepository.findById(request.getPerfilAcessoId());
 
         List<String> response = new ArrayList<>();
 
