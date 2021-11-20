@@ -1,5 +1,6 @@
 package com.sga.backoffice.services;
 
+import com.sga.backoffice.controllers.request.AmbienteRequest;
 import com.sga.backoffice.entities.Ambiente;
 import com.sga.backoffice.repositories.AmbienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ public class AmbienteService {
     @Autowired
     private AmbienteRepository repository;
 
-    public boolean create(Ambiente request) {
+    public boolean create(AmbienteRequest request) {
         Optional<Ambiente> ambiente = repository.findByNome(request.getNome());
 
         if(ambiente.isPresent()){

@@ -1,7 +1,6 @@
 package com.sga.backoffice.controllers;
 
 import com.sga.backoffice.controllers.request.UsuarioSignupRequest;
-import com.sga.backoffice.entities.Colaborador;
 import com.sga.backoffice.entities.Usuario;
 import com.sga.backoffice.repositories.ColaboradorRepository;
 import com.sga.backoffice.repositories.UsuarioRepository;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {

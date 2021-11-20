@@ -1,5 +1,6 @@
 package com.sga.backoffice.controllers;
 
+import com.sga.backoffice.controllers.request.AmbienteRequest;
 import com.sga.backoffice.entities.Ambiente;
 import com.sga.backoffice.repositories.AmbienteRepository;
 import com.sga.backoffice.services.AmbienteService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/ambiente")
 public class AmbienteController {
@@ -47,7 +49,7 @@ public class AmbienteController {
     }
 
     @PostMapping("/novo")
-    public ResponseEntity<String> newAmbiente(@RequestBody Ambiente ambiente){
+    public ResponseEntity<String> newAmbiente(@RequestBody AmbienteRequest ambiente){
         boolean sucess = service.create(ambiente);
 
         if(sucess){
